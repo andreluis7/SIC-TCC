@@ -34,7 +34,7 @@
 		<property name="hbm2ddl.auto">update</property>
 		
 		<!-- Mapeamento das entidades -->
-		<mapping class="br.com.sic.domain.Funcionario" />
+<!-- 		<mapping class="br.com.sic.domain.Funcionario" /> -->
 	</session-factory>
 
 </hibernate-configuration>
