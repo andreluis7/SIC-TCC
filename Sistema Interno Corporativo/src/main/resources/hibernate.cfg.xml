@@ -36,6 +36,7 @@
 		<!-- Mapeamento das entidades -->
 		<mapping class="br.com.sic.domain.Pessoa" />
 		<mapping class="br.com.sic.domain.Funcionario" />
+		<mapping class="br.com.sic.domain.Problema" />
 		
 	</session-factory>
 
