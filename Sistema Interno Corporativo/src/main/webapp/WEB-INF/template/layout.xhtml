@@ -50,8 +50,9 @@ body, html {
 					 FUNCIONARIO</h:link>
 				<h:link outcome="/pages/problemas.xhtml"
 					class="w3-bar-item w3-button"> PROBLEMA</h:link>
-				<a href="#pricing" class="w3-bar-item w3-button"> PRICING</a> <a
-					href="#contact" class="w3-bar-item w3-button">CONTACT</a>
+				<h:link outcome="/pages/usuarios.xhtml"
+					class="w3-bar-item w3-button"> USUARIO</h:link>
+				<a href="#contact" class="w3-bar-item w3-button">CONTACT</a>
 			</div>
 			<!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
@@ -73,10 +74,10 @@ body, html {
 		outcome="/pages/funcionarios.xhtml" onclick="w3_close()"
 		class="w3-bar-item w3-button">FUNCIONARIO</h:link> <h:link
 		outcome="/pages/problemas.xhtml" onclick="w3_close()"
-		class="w3-bar-item w3-button">PROBLEMA</h:link> <a href="#pricing"
-		onclick="w3_close()" class="w3-bar-item w3-button">PRICING</a> <a
-		href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">CONTACT</a>
-	</nav>
+		class="w3-bar-item w3-button">PROBLEMA</h:link> <h:link
+		outcome="/pages/usuarios.xhtml" onclick="w3_close()"
+		class="w3-bar-item w3-button">USUARIO</h:link> <a href="#contact"
+		onclick="w3_close()" class="w3-bar-item w3-button">CONTACT</a> </nav>
 
 	<div id="conteudo">
 		<ui:insert name="conteudo" />

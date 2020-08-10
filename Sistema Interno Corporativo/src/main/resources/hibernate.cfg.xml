@@ -31,12 +31,13 @@
 		<property name="show_sql">true</property>
 
 		<!-- Cria as tabelas do banco de dados -->
-		<property name="hbm2ddl.auto">create</property>
+		<property name="hbm2ddl.auto">update</property>
 		
 		<!-- Mapeamento das entidades -->
 		<mapping class="br.com.sic.domain.Pessoa" />
 		<mapping class="br.com.sic.domain.Funcionario" />
 		<mapping class="br.com.sic.domain.Problema" />
+		<mapping class="br.com.sic.domain.Usuario" />
 		
 	</session-factory>
 
