@@ -28,27 +28,29 @@
 	<!-- 		library="vendor" /> -->
 </h:head>
 <h:body>
-
+	<p:growl id="mensagem" />
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form class="login100-form validate-form">
+				<h:form class="login100-form validate-form">
 					<span class="login100-form-title p-b-26"> Bem-vindo ao SIC </span>
 					<span class="login100-form-title p-b-48"> <i
 						class="zmdi zmdi-font"></i>
 					</span>
 
 					<div class="wrap-inputCustom validate-input">
-						<p:inputText label="E-Mail" requiredMessage="E-mail obrigatório"
-							placeholder="E-mail" />
+						<p:inputMask id="cpf" mask="999.999.999-99" size="20"
+							required="true" requiredMessage="O campo CPF é obrigatório"
+							value="#{autenticacaoBean.usuario.pessoa.cpf}" placeholder="CPF" />
 						<span class="focus-input100"></span>
 					</div>
 
 					<div class="wrap-inputCustom validate-input">
 						<span class="btn-show-pass"> <i class="zmdi zmdi-eye"></i>
 						</span>
-						<p:password label="Password" requiredMessage="Senha obrigatória"
-							placeholder="Senha" />
+						<p:password id="senha" maxlength="8" size="20" required="true"
+							requiredMessage="O campo Senha é obrigatório"
+							value="#{autenticacaoBean.usuario.senha}" placeholder="Senha" />
 
 						<span class="focus-input100"></span>
 					</div>
@@ -59,13 +61,14 @@
 					<!-- 							<button class="login100-form-btn">Login</button> -->
 					<!-- 						</div> -->
 					<!-- 					</div> -->
-					<p:button value="Login" outcome="/pages/principal.xhtml"/>
+					<p:commandButton value="Entrar" update=":mensagem"
+						actionListener="#{autenticacaoBean.autenticar}" />
 
 					<div class="text-center p-t-115">
 						<span class="txt1"> Ainda não possui cadastro? </span> <a
 							class="txt2" href="#"> Solicitar acesso </a>
 					</div>
-				</form>
+				</h:form>
 			</div>
 		</div>
 	</div>
