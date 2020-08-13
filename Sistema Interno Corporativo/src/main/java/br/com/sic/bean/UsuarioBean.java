@@ -7,7 +7,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import br.com.sic.dao.PessoaDAO;

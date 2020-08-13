@@ -1,6 +1,6 @@
 package br.com.sic.dao;
 
-import org.apache.shiro.crypto.hash.SimpleHash;
+//import org.apache.shiro.crypto.hash.SimpleHash;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;

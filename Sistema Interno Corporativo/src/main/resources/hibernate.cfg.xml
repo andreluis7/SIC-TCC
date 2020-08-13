@@ -34,8 +34,9 @@
 		<property name="hbm2ddl.auto">update</property>
 		
 		<!-- Mapeamento das entidades -->
-		<mapping class="br.com.sic.domain.Pessoa" />
 		<mapping class="br.com.sic.domain.Funcionario" />
+		<mapping class="br.com.sic.domain.Manutencao" />
+		<mapping class="br.com.sic.domain.Pessoa" />
 		<mapping class="br.com.sic.domain.Problema" />
 		<mapping class="br.com.sic.domain.Usuario" />
 		
