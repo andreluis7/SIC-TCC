@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>SIC - Sistema Interno Corporativo</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<h:outputStylesheet name="util.css" library="css" />
+	<h:outputStylesheet name="main.css" library="css" />
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+	<!-- 	<h:outputStylesheet name="bootstrap/css/bootstrap.min.css" -->
+	<!-- 		library="vendor" /> -->
+	<!-- 	<h:outputStylesheet name="font-awesome-4.7.0/css/font-awesome.min.css" -->
+	<!-- 		library="fonts" /> -->
+	<!-- 	<h:outputStylesheet -->
+	<!-- 		name="iconic/css/material-design-iconic-font.min.css" library="fonts" /> -->
+	<!-- 	<h:outputStylesheet name="animate/animate.css" library="vendor" /> -->
+	<!-- 	<h:outputStylesheet name="css-hamburgers/hamburgers.min.css" -->
+	<!-- 		library="vendor" /> -->
+	<!-- 	<h:outputStylesheet name="animsition/css/animsition.min.css" -->
+	<!-- 		library="vendor" /> -->
+	<!-- 	<h:outputStylesheet name="select2/select2.min.css" library="vendor" /> -->
+	<!-- 	<h:outputStylesheet name="daterangepicker/daterangepicker.css" -->
+	<!-- 		library="vendor" /> -->
+</h:head>
+<h:body>
+	<p:growl id="mensagem" />
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<h:form class="login100-form validate-form">
+					<span class="login100-form-title p-b-26"> Bem-vindo ao SIC </span>
+					<span class="login100-form-title p-b-48"> <i
+						class="zmdi zmdi-font"></i>
+					</span>
+
+					<div class="wrap-inputCustom validate-input">
+						<p:inputMask id="cpf" mask="999.999.999-99" size="20"
+							required="true" requiredMessage="O campo CPF é obrigatório"
+							value="#{autenticacaoBean.usuario.pessoa.cpf}" placeholder="CPF" />
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-inputCustom validate-input">
+						<span class="btn-show-pass"> <i class="zmdi zmdi-eye"></i>
+						</span>
+						<p:password id="senha" maxlength="8" size="20" required="true"
+							requiredMessage="O campo Senha é obrigatório"
+							value="#{autenticacaoBean.usuario.senha}" placeholder="Senha" />
+
+						<span class="focus-input100"></span>
+					</div>
+
+					<!-- 					<div class="container-login100-form-btn"> -->
+					<!-- 						<div class="wrap-login100-form-btn"> -->
+					<!-- 							<div class="login100-form-bgbtn"></div> -->
+					<!-- 							<button class="login100-form-btn">Login</button> -->
+					<!-- 						</div> -->
+					<!-- 					</div> -->
+					<p:commandButton value="Entrar" update=":mensagem"
+						actionListener="#{autenticacaoBean.autenticar}" />
+
+					<div class="text-center p-t-115">
+						<span class="txt1"> Ainda não possui cadastro? </span> <a
+							class="txt2" href="#"> Solicitar acesso </a>
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="dropDownSelect1"></div>
+
+	<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+	<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+</h:body>
+</html>
