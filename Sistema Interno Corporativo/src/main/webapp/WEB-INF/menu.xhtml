@@ -1,0 +1,21 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pp="http://primefaces.org/poseidon">
+    
+    <h:form id="menuform"> 
+        <div class="layout-menu-container">
+            <div class="nano">
+                <div class="nano-content menu-scroll-content">
+                    <pp:menu widgetVar="me">
+                        <p:menuitem id="om_dashboard" value="Test Page" icon="fa fa-fw fa-home" outcome="/test"/>
+                    </pp:menu>
+                    
+                </div>
+            </div>
+        </div>
+    </h:form>
+</ui:composition>

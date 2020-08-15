@@ -88,6 +88,13 @@
 			<artifactId>all-themes</artifactId>
 			<version>1.0.10</version>
 		</dependency>
+		
+		<!-- Babylon Theme -->
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>poseidon-theme</artifactId>
+			<version>2.0.0</version>
+		</dependency>
 
 		<!-- OmniFaces -->
 		<dependency>
