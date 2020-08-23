@@ -9,5 +9,49 @@
 	template="/WEB-INF/template/layout.xhtml">
 
 	<ui:define name="conteudo">
+		<!-- Promo Section - "We know design" -->
+		<div class="w3-container w3-light-grey" style="padding: 128px 16px">
+			<div class="w3-row-padding">
+				<div class="w3-col m6">
+					<h3>Seja Bem Vindo ao SIC.</h3>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+						eiusmod<br />tempor incididunt ut labore et dolore.
+					</p>
+				</div>
+				<div class="w3-col m6">
+					<h:graphicImage styleClass="w3-image w3-round-large"
+						url="/resources/images/phone_buildings.jpg" alt="Buildings"
+						width="700" height="394" />
+				</div>
+			</div>
+		</div>
+
+		<script>
+			// Modal Image Gallery
+			function onClick(element) {
+				document.getElementById("img01").src = element.src;
+				document.getElementById("modal01").style.display = "block";
+				var captionText = document.getElementById("caption");
+				captionText.innerHTML = element.alt;
+			}
+
+			// Toggle between showing and hiding the sidebar when clicking the menu icon
+			var mySidebar = document.getElementById("mySidebar");
+
+			function w3_open() {
+				if (mySidebar.style.display === 'block') {
+					mySidebar.style.display = 'none';
+				} else {
+					mySidebar.style.display = 'block';
+				}
+			}
+
+			// Close the sidebar with the close button
+			function w3_close() {
+				mySidebar.style.display = "none";
+			}
+		</script>
+
 	</ui:define>
 </ui:composition>

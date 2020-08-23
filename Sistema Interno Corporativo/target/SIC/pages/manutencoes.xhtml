@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/WEB-INF/template/layout.xhtml">
+
+	<ui:define name="conteudo">
+		<h:form id="formListagem">
+			<p:panel header="Manutenções - Listagem">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{manutencaoBean.manutencoes}"
+					var="manutencao" rows="5">
+					<f:facet name="header">
+						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+							actionListener="#{manutencaoBean.novo}"
+							update=":mensagem :formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+
+					<p:column headerText="Observação" sortBy="#{manutencao.observacao}"
+						filterBy="#{manutencao.observacao}">
+						<h:outputText value="#{manutencao.observacao}" />
+					</p:column>
+
+					<p:column headerText="Problema"
+						sortBy="#{manutencao.problema.descricao}"
+						filterBy="#{manutencao.problema.descricao}">
+						<h:outputText value="#{manutencao.problema.descricao}" />
+					</p:column>
+
+					<p:column headerText="Data de abertura"
+						sortBy="#{manutencao.dataHoraAbertura}"
+						filterBy="#{manutencao.dataHoraAbertura}" >
+						<h:outputText value="#{manutencao.dataHoraAbertura}" />
+					</p:column>
+
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+
+		<p:dialog header="Manutenções - Cadastro" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" closable="false">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel for="problema" value="Problema:" />
+					<p:selectOneMenu id="problema" filter="true"
+						value="#{manutencaoBean.manutencao.problema}" required="true"
+						requiredMessage="O campo 'Problema' é obrigatório"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione uma problema" />
+						<f:selectItems value="#{manutencaoBean.problemas}" var="problema"
+							itemValue="#{problema}" itemLabel="#{problema.descricao}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="observacao" value="Observação:" />
+					<p:inputText id="observacao" maxlength="8" size="10"
+						value="#{manutencaoBean.manutencao.observacao}" required="true"
+						requiredMessage="O campo 'Observação' é obrigatório" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						update=":mensagem :formCadastro:painel :formListagem:tabela"
+						actionListener="#{manutencaoBean.salvar}" />
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
