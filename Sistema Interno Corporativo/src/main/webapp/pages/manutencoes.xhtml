@@ -49,6 +49,12 @@
 			draggable="false" resizable="false" modal="true" closable="false">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painel" columns="2">
+
+					<p:outputLabel for="usuario" value="Usuário" />
+					<p:inputText id="usuario" maxlength="8" size="10"
+						value="#{manutencaoBean.usuario.pessoa.nome}" required="true"
+						requiredMessage="O campo nome é obrigatório" readonly="true"/>
+
 					<p:outputLabel for="problema" value="Problema:" />
 					<p:selectOneMenu id="problema" filter="true"
 						value="#{manutencaoBean.manutencao.problema}" required="true"
@@ -61,7 +67,7 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel for="observacao" value="Observação:" />
-					<p:inputText id="observacao" maxlength="8" size="10"
+					<p:inputTextarea id="observacao" maxlength="300" size="300"
 						value="#{manutencaoBean.manutencao.observacao}" required="true"
 						requiredMessage="O campo 'Observação' é obrigatório" />
 

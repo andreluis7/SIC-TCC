@@ -23,6 +23,10 @@ public class Manutencao extends GenericDomain {
 	@JoinColumn(nullable = false)
 	private Problema problema;
 
+	@OneToOne
+	@JoinColumn(nullable = false)
+	private Usuario usuario;
+
 	public String getObservacao() {
 		return observacao;
 	}
@@ -46,6 +50,12 @@ public class Manutencao extends GenericDomain {
 	public void setProblema(Problema problema) {
 		this.problema = problema;
 	}
-	
-	
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 }
