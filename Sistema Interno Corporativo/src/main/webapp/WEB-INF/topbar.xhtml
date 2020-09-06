@@ -19,12 +19,12 @@
 
 					<ul class="poseidon-menu animated">
 						<li role="menuitem"><a href="#"> <i
-								class="fa fa-fw fa-cog"></i> <span>Configurações</span>
+								class="fa fa-fw fa-sign-out"></i> <span>Sair</span>
 						</a></li>
 					</ul></li>
-				<li><a href="#"> <i class="topbar-icon fa fa-fw fa-cog"></i>
-						<span class="topbar-item-name">Configurações</span>
-				</a></li>
+				<li><p:commandLink actionListener="#{autenticacaoBean.logout()}"> <i class="topbar-icon fa fa-fw fa-sign-out"></i>
+						<span class="topbar-item-name">Sair</span>
+				</p:commandLink></li>
 				
 			</ul>
 		</div>

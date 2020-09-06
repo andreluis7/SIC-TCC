@@ -20,6 +20,8 @@ import br.com.sic.domain.Usuario;
 public class AutenticacaoBean {
 	private Usuario usuario;
 	private Usuario usuarioLogado;
+	private boolean mostraUsuario = false, mostraPessoa = false, mostraFuncionario = false, mostraProblema = false,
+			mostraManutencao = false;
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -35,6 +37,26 @@ public class AutenticacaoBean {
 
 	public void setUsuarioLogado(Usuario usuarioLogado) {
 		this.usuarioLogado = usuarioLogado;
+	}
+
+	public boolean isMostraFuncionario() {
+		return mostraFuncionario;
+	}
+
+	public boolean isMostraManutencao() {
+		return mostraManutencao;
+	}
+
+	public boolean isMostraPessoa() {
+		return mostraPessoa;
+	}
+
+	public boolean isMostraProblema() {
+		return mostraProblema;
+	}
+
+	public boolean isMostraUsuario() {
+		return mostraUsuario;
 	}
 
 	@PostConstruct
@@ -53,9 +75,9 @@ public class AutenticacaoBean {
 				return;
 			}
 
-			//colocar atributo na sessao
+			// colocar atributo na sessao
 			getSession().setAttribute("usurioLogado", usuarioLogado);
-			
+
 			Faces.redirect("./pages/principal.xhtml");
 
 		} catch (IOException erro) {
@@ -63,21 +85,58 @@ public class AutenticacaoBean {
 			Messages.addGlobalError(erro.getMessage());
 		}
 	}
-	
+
 	public HttpSession getSession() {
 
 		return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 
 	}
 
-//	public boolean temPermissoes(List<String> permissoes){	
-//		for(String permissao : permissoes){
-//			if(usuarioLogado.getTipo() == permissao.charAt(0)){
-//				return true;
-//			}
-//		}
-//		
-//		return false;
-//	}
+	public void verificaTipoUsuario() {
+
+		switch (usuarioLogado.getTipoUsuario()) {
+		case ADMINISTRADOR:
+			mostraFuncionario = true;
+			mostraManutencao = true;
+			mostraPessoa = true;
+			mostraProblema = true;
+			mostraUsuario = true;
+			break;
+		case FUNCIONARIO:
+			mostraManutencao = true;
+
+			mostraFuncionario = false;
+			mostraPessoa = false;
+			mostraProblema = false;
+			mostraUsuario = false;
+			break;
+		case SUPORTE:
+			mostraProblema = true;
+			mostraManutencao = true;
+			
+			mostraFuncionario = false;
+			mostraPessoa = false;
+			mostraUsuario = false;
+			break;
+		default:
+			break;
+		}
+
+	}
+	
+	/**
+	 * Método para fazer logout.
+	 * 
+	 */
+	public void logout() {
+		usuarioLogado = new Usuario();
+		getSession().setAttribute("usurioLogado", usuarioLogado);
+		
+		try {
+			Faces.redirect("pages/login.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }
