@@ -1,6 +1,9 @@
 package br.com.sic.bean;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +31,7 @@ public class ManutencaoBean implements Serializable {
 
 	private List<Problema> problemas;
 	private List<Manutencao> manutencoes;
-
+	
 	public Manutencao getManutencao() {
 		return manutencao;
 	}
@@ -60,20 +63,33 @@ public class ManutencaoBean implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-
+	
 	@PostConstruct
 	public void listar() {
 		try {
 			usuarioLogado = (Object) getSession().getAttribute("usurioLogado");
 			
 			usuario = (Usuario) usuarioLogado;
-
-			ManutencaoDAO manutencaoDAO = new ManutencaoDAO();
-			manutencoes = manutencaoDAO.listar("codigo");
+			
+			formataData();
+			
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar listar as manutenções");
 			erro.printStackTrace();
 		}
+	}
+	
+	public void formataData() {
+		
+		ManutencaoDAO manutencaoDAO = new ManutencaoDAO();
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		manutencoes = manutencaoDAO.listar("codigo");
+		
+		for (Manutencao manutencao : manutencoes) {
+			Date dataHoraManutencao = manutencao.getDataHoraAbertura();
+			manutencao.setDataHoraFormatada(dateFormat.format(dataHoraManutencao));
+		}
+		
 	}
 
 	public void novo() {
@@ -100,6 +116,8 @@ public class ManutencaoBean implements Serializable {
 
 			ProblemaDAO problemaDAO = new ProblemaDAO();
 			problemas = problemaDAO.listar("codigo");
+			
+			formataData();
 
 			Messages.addGlobalInfo("Manutenção salva com sucesso!");
 		} catch (RuntimeException erro) {

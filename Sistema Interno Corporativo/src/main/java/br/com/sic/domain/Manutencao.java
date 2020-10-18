@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @SuppressWarnings("serial")
 @Entity
@@ -26,6 +27,9 @@ public class Manutencao extends GenericDomain {
 	@OneToOne
 	@JoinColumn(nullable = false)
 	private Usuario usuario;
+	
+	@Transient
+	private String dataHoraFormatada;
 
 	public String getObservacao() {
 		return observacao;
@@ -57,5 +61,13 @@ public class Manutencao extends GenericDomain {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	public String getDataHoraFormatada() {
+		return dataHoraFormatada;
+	}
+	
+	public void setDataHoraFormatada(String dataHoraFormatada) {
+		this.dataHoraFormatada = dataHoraFormatada;
 	}
 }
