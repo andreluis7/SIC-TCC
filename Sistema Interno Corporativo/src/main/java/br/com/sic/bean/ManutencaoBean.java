@@ -3,7 +3,6 @@ package br.com.sic.bean;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +30,8 @@ public class ManutencaoBean implements Serializable {
 
 	private List<Problema> problemas;
 	private List<Manutencao> manutencoes;
+	
+	private ManutencaoDAO manutencaoDAO;
 	
 	public Manutencao getManutencao() {
 		return manutencao;
@@ -71,6 +72,8 @@ public class ManutencaoBean implements Serializable {
 			
 			usuario = (Usuario) usuarioLogado;
 			
+			manutencaoDAO = new ManutencaoDAO();
+			
 			formataData();
 			
 		} catch (RuntimeException erro) {
@@ -81,15 +84,28 @@ public class ManutencaoBean implements Serializable {
 	
 	public void formataData() {
 		
-		ManutencaoDAO manutencaoDAO = new ManutencaoDAO();
+		
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		manutencoes = manutencaoDAO.listar("codigo");
+		verificaListagem();
 		
 		for (Manutencao manutencao : manutencoes) {
 			Date dataHoraManutencao = manutencao.getDataHoraAbertura();
 			manutencao.setDataHoraFormatada(dateFormat.format(dataHoraManutencao));
 		}
 		
+	}
+	
+	public void verificaListagem() {
+		switch (usuario.getTipoUsuario()) {
+		case ADMINISTRADOR:
+			manutencoes = manutencaoDAO.listar("codigo");
+			break;
+		case SUPORTE:
+			manutencoes = manutencaoDAO.listar("codigo");
+			break;
+		default:
+			manutencoes = manutencaoDAO.listarPorUsuario(usuario.getCodigo());
+		}
 	}
 
 	public void novo() {
