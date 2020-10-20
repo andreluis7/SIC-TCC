@@ -19,6 +19,7 @@ import br.com.sic.dao.ProblemaDAO;
 import br.com.sic.domain.Manutencao;
 import br.com.sic.domain.Problema;
 import br.com.sic.domain.Usuario;
+import br.com.sic.enumeradores.StatusChamado;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -125,6 +126,7 @@ public class ManutencaoBean implements Serializable {
 			ManutencaoDAO manutencaoDAO = new ManutencaoDAO();
 			manutencao.setUsuario(usuario);
 			manutencao.setDataHoraAbertura(new Date());
+			manutencao.setStatusChamado(StatusChamado.ABERTO);
 			manutencaoDAO.merge(manutencao);
 
 			manutencao = new Manutencao();

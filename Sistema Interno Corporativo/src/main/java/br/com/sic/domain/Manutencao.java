@@ -4,11 +4,15 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import br.com.sic.enumeradores.StatusChamado;
 
 @SuppressWarnings("serial")
 @Entity
@@ -27,7 +31,11 @@ public class Manutencao extends GenericDomain {
 	@OneToOne
 	@JoinColumn(nullable = false)
 	private Usuario usuario;
-	
+
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private StatusChamado statusChamado;
+
 	@Transient
 	private String dataHoraFormatada;
 
@@ -62,12 +70,20 @@ public class Manutencao extends GenericDomain {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
 	public String getDataHoraFormatada() {
 		return dataHoraFormatada;
 	}
-	
+
 	public void setDataHoraFormatada(String dataHoraFormatada) {
 		this.dataHoraFormatada = dataHoraFormatada;
+	}
+
+	public StatusChamado getStatusChamado() {
+		return statusChamado;
+	}
+
+	public void setStatusChamado(StatusChamado statusChamado) {
+		this.statusChamado = statusChamado;
 	}
 }

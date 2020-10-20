@@ -40,6 +40,12 @@
 						<h:outputText value="#{manutencao.problema.descricao}" />
 					</p:column>
 
+					<p:column headerText="Status"
+						sortBy="#{manutencao.statusChamado}"
+						filterBy="#{manutencao.statusChamado}">
+						<h:outputText value="#{manutencao.statusChamado}" />
+					</p:column>
+
 					<p:column headerText="Data de abertura"
 						sortBy="#{manutencao.dataHoraFormatada}"
 						filterBy="#{manutencao.dataHoraFormatada}">
