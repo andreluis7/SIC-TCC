@@ -39,6 +39,7 @@
 		<mapping class="br.com.sic.domain.Pessoa" />
 		<mapping class="br.com.sic.domain.Problema" />
 		<mapping class="br.com.sic.domain.Usuario" />
+		<mapping class="br.com.sic.domain.Chamado" />
 		
 	</session-factory>
 
