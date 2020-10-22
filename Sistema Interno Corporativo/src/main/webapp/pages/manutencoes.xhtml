@@ -23,12 +23,13 @@
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
-					
-					<p:column headerText="Funcionário" sortBy="#{manutencao.usuario.pessoa.nome}"
+
+					<p:column headerText="Funcionário"
+						sortBy="#{manutencao.usuario.pessoa.nome}"
 						filterBy="#{manutencao.usuario.pessoa.nome}">
 						<h:outputText value="#{manutencao.usuario.pessoa.nome}" />
 					</p:column>
-					
+
 					<p:column headerText="Observação" sortBy="#{manutencao.observacao}"
 						filterBy="#{manutencao.observacao}">
 						<h:outputText value="#{manutencao.observacao}" />
@@ -40,10 +41,18 @@
 						<h:outputText value="#{manutencao.problema.descricao}" />
 					</p:column>
 
-					<p:column headerText="Status"
-						sortBy="#{manutencao.statusChamado}"
+					<p:column headerText="Status" sortBy="#{manutencao.statusChamado}"
 						filterBy="#{manutencao.statusChamado}">
+
 						<h:outputText value="#{manutencao.statusChamado}" />
+
+						<p:commandButton icon="ui-icon-search"
+							actionListener="#{manutencaoBean.carregaInfoChamado}"
+							update=":mensagem :formListagem:tabela :formCadastroChamados">
+							<f:attribute name="manutencaoSelecionada" value="#{manutencao}" />
+						</p:commandButton>
+
+
 					</p:column>
 
 					<p:column headerText="Data de abertura"
@@ -64,7 +73,7 @@
 					<p:outputLabel for="usuario" value="Usuário" />
 					<p:inputText id="usuario" maxlength="8" size="50"
 						value="#{manutencaoBean.usuario.pessoa.nome}" required="true"
-						requiredMessage="O campo nome é obrigatório" readonly="true"/>
+						requiredMessage="O campo nome é obrigatório" readonly="true" />
 
 					<p:outputLabel for="problema" value="Problema:" />
 					<p:selectOneMenu id="problema" filter="true"
@@ -92,5 +101,48 @@
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
+
+		<p:dialog header="Chamados" widgetVar="dlgChamado" draggable="false"
+			resizable="false" modal="true" closable="false">
+			<h:form id="formCadastroChamados">
+				<h:panelGrid id="painel" columns="2">
+
+					<p:outputLabel for="usuarioNome" value="Usuário" />
+					<p:inputText id="usuarioNome"
+						value="#{manutencaoBean.chamado.usuario.pessoa.nome}"
+						maxlength="8" size="50" readonly="true"/>
+
+					<p:outputLabel for="problemaDescricao" value="Problema:" />
+					<p:inputText id="problemaDescricao"
+						value="#{manutencaoBean.chamado.manutencao.problema.descricao}"/>
+					
+					<p:outputLabel for="statusChamado" value="Status:" />
+					<p:inputText id="statusChamado"
+						value="#{manutencaoBean.chamado.manutencao.statusChamado}"/>
+						
+					<p:outputLabel for="observacaoChamado" value="Observação:" />
+					<p:inputTextarea id="observacaoChamado" maxlength="300" size="300"
+						value="#{manutencaoBean.chamado.observacao}" required="true"
+						requiredMessage="O campo 'Observação' é obrigatório" />
+
+					<p:outputLabel for="horaInicioChamado" value="Data e hora início:" />
+					<p:outputLabel id="horaInicioChamado"
+						value="#{manutencaoBean.chamado.dataHoraRecebidaFormatada}"/>
+					
+					<p:outputLabel for="horaFimChamado" value="Data e hora encerramento:" />
+					<p:outputLabel id="horaFimChamado"
+						value="#{manutencaoBean.chamado.dataHoraFinalizadaFormatada}"/>
+					
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						update=":mensagem :formCadastro:painel :formListagem:tabela"
+						actionListener="#{manutencaoBean.salvarChamado}" />
+					<p:commandButton value="Fechar" oncomplete="PF('dlgChamado').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
 	</ui:define>
 </ui:composition>

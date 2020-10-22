@@ -10,12 +10,16 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 
 import org.omnifaces.util.Messages;
+import org.primefaces.PrimeFaces;
 
+import br.com.sic.dao.ChamadoDAO;
 import br.com.sic.dao.ManutencaoDAO;
 import br.com.sic.dao.ProblemaDAO;
+import br.com.sic.domain.Chamado;
 import br.com.sic.domain.Manutencao;
 import br.com.sic.domain.Problema;
 import br.com.sic.domain.Usuario;
@@ -28,12 +32,14 @@ public class ManutencaoBean implements Serializable {
 	private Manutencao manutencao;
 	private Object usuarioLogado;
 	private Usuario usuario;
+	private Chamado chamado;
 
 	private List<Problema> problemas;
 	private List<Manutencao> manutencoes;
-	
+
 	private ManutencaoDAO manutencaoDAO;
-	
+	private ChamadoDAO chamadoDAO;
+
 	public Manutencao getManutencao() {
 		return manutencao;
 	}
@@ -57,45 +63,53 @@ public class ManutencaoBean implements Serializable {
 	public void setManutencoes(List<Manutencao> manutencoes) {
 		this.manutencoes = manutencoes;
 	}
-	
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
-	
+
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
+	public Chamado getChamado() {
+		return chamado;
+	}
+
+	public void setChamado(Chamado chamado) {
+		this.chamado = chamado;
+	}
+
 	@PostConstruct
 	public void listar() {
 		try {
 			usuarioLogado = (Object) getSession().getAttribute("usurioLogado");
-			
+
 			usuario = (Usuario) usuarioLogado;
-			
+
 			manutencaoDAO = new ManutencaoDAO();
-			
-			formataData();
-			
+			chamadoDAO = new ChamadoDAO();
+
+			formataDataManutencao();
+
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar listar as manutenções");
 			erro.printStackTrace();
 		}
 	}
-	
-	public void formataData() {
-		
-		
+
+	public void formataDataManutencao() {
+
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		verificaListagem();
-		
+
 		for (Manutencao manutencao : manutencoes) {
 			Date dataHoraManutencao = manutencao.getDataHoraAbertura();
 			manutencao.setDataHoraFormatada(dateFormat.format(dataHoraManutencao));
 		}
-		
+
 	}
-	
+
 	public void verificaListagem() {
 		switch (usuario.getTipoUsuario()) {
 		case ADMINISTRADOR:
@@ -134,14 +148,37 @@ public class ManutencaoBean implements Serializable {
 
 			ProblemaDAO problemaDAO = new ProblemaDAO();
 			problemas = problemaDAO.listar("codigo");
-			
-			formataData();
+
+			formataDataManutencao();
 
 			Messages.addGlobalInfo("Manutenção salva com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar a manutenção");
 			erro.printStackTrace();
 		}
+	}
+
+	public void carregaInfoChamado(ActionEvent evento) {
+		manutencao = (Manutencao) evento.getComponent().getAttributes().get("manutencaoSelecionada");
+		
+		chamado = new Chamado();
+		chamado.setManutencao(manutencao);
+		chamado.setUsuario(usuario);
+
+		PrimeFaces.current().executeScript("PF('dlgChamado').show();");
+	}
+
+	public void salvarChamado() {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		
+		chamado.setDataHoraRecebida(new Date());
+		chamado.setDataHoraRecebidaFormatada(dateFormat.format(chamado.getDataHoraRecebida()));
+		chamado.setDataHoraFinalizada(new Date());
+		chamado.setDataHoraFinalizadaFormatada(dateFormat.format(chamado.getDataHoraFinalizada()));
+
+		chamadoDAO.salvar(chamado);
+		
+		Messages.addGlobalInfo("Chamado salvo com sucesso!");
 	}
 
 	public HttpSession getSession() {
