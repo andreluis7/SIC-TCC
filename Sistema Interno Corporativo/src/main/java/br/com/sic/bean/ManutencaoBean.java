@@ -160,24 +160,35 @@ public class ManutencaoBean implements Serializable {
 
 	public void carregaInfoChamado(ActionEvent evento) {
 		manutencao = (Manutencao) evento.getComponent().getAttributes().get("manutencaoSelecionada");
-		
+
 		chamado = new Chamado();
-		chamado.setManutencao(manutencao);
-		chamado.setUsuario(usuario);
+		chamado = chamadoDAO.buscarChamado(manutencao.getCodigo(), manutencao.getUsuario().getCodigo());
+
+		if (chamado == null) {
+			chamado = new Chamado();
+			chamado.setManutencao(manutencao);
+			chamado.setUsuario(usuario);
+		} else {
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			
+			chamado.setDataHoraRecebidaFormatada(dateFormat.format(chamado.getDataHoraRecebida()));
+			chamado.setDataHoraFinalizadaFormatada(dateFormat.format(chamado.getDataHoraFinalizada()));
+
+		}
 
 		PrimeFaces.current().executeScript("PF('dlgChamado').show();");
 	}
 
 	public void salvarChamado() {
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		
 		chamado.setDataHoraRecebida(new Date());
-		chamado.setDataHoraRecebidaFormatada(dateFormat.format(chamado.getDataHoraRecebida()));
 		chamado.setDataHoraFinalizada(new Date());
-		chamado.setDataHoraFinalizadaFormatada(dateFormat.format(chamado.getDataHoraFinalizada()));
-
-		chamadoDAO.salvar(chamado);
 		
+		manutencao.setStatusChamado(StatusChamado.FECHADO);
+		manutencaoDAO.merge(manutencao);
+				
+		chamadoDAO.merge(chamado);
+
 		Messages.addGlobalInfo("Chamado salvo com sucesso!");
 	}
 

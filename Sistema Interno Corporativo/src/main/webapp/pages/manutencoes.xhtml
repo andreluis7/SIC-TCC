@@ -114,11 +114,13 @@
 
 					<p:outputLabel for="problemaDescricao" value="Problema:" />
 					<p:inputText id="problemaDescricao"
-						value="#{manutencaoBean.chamado.manutencao.problema.descricao}"/>
+						value="#{manutencaoBean.chamado.manutencao.problema.descricao}"
+						readonly="true"/>
 					
 					<p:outputLabel for="statusChamado" value="Status:" />
 					<p:inputText id="statusChamado"
-						value="#{manutencaoBean.chamado.manutencao.statusChamado}"/>
+						value="#{manutencaoBean.chamado.manutencao.statusChamado}"
+						readonly="true"/>
 						
 					<p:outputLabel for="observacaoChamado" value="Observação:" />
 					<p:inputTextarea id="observacaoChamado" maxlength="300" size="300"
