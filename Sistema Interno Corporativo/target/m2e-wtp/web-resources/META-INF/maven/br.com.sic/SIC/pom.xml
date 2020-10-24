@@ -65,8 +65,10 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.13.1</version>
+			<scope>test</scope>
 		</dependency>
+
 
 		<!-- JSF -->
 		<dependency>
@@ -79,7 +81,7 @@
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
-			<version>5.2</version>
+			<version>6.2</version>
 		</dependency>
 
 		<!-- PrimeFaces Themes -->
@@ -88,7 +90,7 @@
 			<artifactId>all-themes</artifactId>
 			<version>1.0.10</version>
 		</dependency>
-		
+
 		<!-- Babylon Theme -->
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
@@ -129,13 +131,6 @@
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
 			<version>6.1.1</version>
-		</dependency>
-
-		<!-- Apache Shiro Core -->
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-core</artifactId>
-			<version>1.2.4</version>
 		</dependency>
 
 	</dependencies>
