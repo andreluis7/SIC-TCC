@@ -6,6 +6,8 @@ br\com\sic\domain\Funcionario.class
 br\com\sic\util\HibernateUtil$1.class
 br\com\sic\dao\PessoaDAO.class
 br\com\sic\domain\Pessoa.class
+br\com\sic\dao\ChamadoDAO.class
+br\com\sic\bean\AutenticacaoBean$1.class
 br\com\sic\domain\GenericDomain.class
 br\com\sic\bean\ManutencaoBean.class
 br\com\sic\util\AutenticacaoListener.class
@@ -16,9 +18,13 @@ br\com\sic\bean\ProblemaBean.class
 br\com\sic\bean\UsuarioBean.class
 br\com\sic\dao\GenericDAO.class
 br\com\sic\bean\PessoaBean.class
+br\com\sic\enumeradores\StatusChamado.class
 br\com\sic\enumeradores\TipoUsuario.class
+br\com\sic\domain\Chamado.class
 br\com\sic\bean\FuncionarioBean.class
 br\com\sic\domain\Manutencao.class
 br\com\sic\dao\FuncionarioDAO.class
+br\com\sic\enumeradores\StatusChamado$1.class
 br\com\sic\enumeradores\TipoUsuario$1.class
+br\com\sic\bean\ManutencaoBean$1.class
 br\com\sic\domain\Problema.class
