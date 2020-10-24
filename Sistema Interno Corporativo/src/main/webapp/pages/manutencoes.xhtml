@@ -215,10 +215,19 @@
 						requiredMessage="O campo 'Observação' é obrigatório"
 						rendered="#{manutencaoBean.habilitaCampo}" />
 
-					<p:outputLabel for="horaInicioChamado" value="Data e hora início:" />
+					<p:outputLabel for="horaInicioChamado"
+						value="Data e hora da solicitação: " />
 					<p:outputLabel id="horaInicioChamado"
-						value="#{manutencaoBean.mensagemDataHora}" />
+						value="#{manutencaoBean.manutencao.dataHoraFormatada}" />
 
+
+					<p:outputLabel for="horaInicio"
+						value="Data e hora ínicio:"
+						rendered="#{manutencaoBean.habilitaCampo}" />
+					<p:outputLabel id="horaInicio"
+						value="#{manutencaoBean.chamado.dataHoraRecebidaFormatada}"
+						rendered="#{manutencaoBean.habilitaCampo}" />
+						
 					<p:outputLabel for="horaFimChamado"
 						value="Data e hora encerramento:"
 						rendered="#{manutencaoBean.habilitaCampo}" />
@@ -228,15 +237,6 @@
 
 				</h:panelGrid>
 
-				<h:panelGrid columns="2">
-					<p:commandButton value="Salvar"
-						update=":mensagem :formCadastro:painel :formListagem:tabela"
-						actionListener="#{manutencaoBean.salvarChamado}"
-						rendered="#{manutencaoBean.habilitaBotao}" />
-					<p:commandButton value="Fechar"
-						oncomplete="PF('dlgChamado').hide();"
-						rendered="#{manutencaoBean.habilitaBotao}" />
-				</h:panelGrid>
 			</h:form>
 		</p:dialog>
 

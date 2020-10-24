@@ -225,12 +225,9 @@ public class ManutencaoBean implements Serializable {
 		switch (manutencao.getStatusChamado()) {
 		case FECHADO:
 			habilitaCampo = true;
-			habilitaBotao = false;
 			break;
 		case ABERTO:
-			habilitaBotao = false;
 			habilitaCampo = false;
-			mensagemDataHora = "Chamado em andamento, em breve setá atendido!";
 		default:
 			habilitaBotao = false;
 			break;
