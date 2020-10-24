@@ -43,8 +43,7 @@ public class ManutencaoBean implements Serializable {
 
 	private Boolean habilitaCampo = false;
 	private Boolean habilitaBotao = true;
-
-	private String mensagemDataHora = "";
+	private String nomeBotao = "";
 
 	public Manutencao getManutencao() {
 		return manutencao;
@@ -102,12 +101,12 @@ public class ManutencaoBean implements Serializable {
 		this.habilitaBotao = habilitaBotao;
 	}
 
-	public String getMensagemDataHora() {
-		return mensagemDataHora;
+	public String getNomeBotao() {
+		return nomeBotao;
 	}
 
-	public void setMensagemDataHora(String mensagemDataHora) {
-		this.mensagemDataHora = mensagemDataHora;
+	public void setNomeBotao(String nomeBotao) {
+		this.nomeBotao = nomeBotao;
 	}
 
 	@PostConstruct
@@ -204,13 +203,24 @@ public class ManutencaoBean implements Serializable {
 		} else {
 			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-			chamado.setDataHoraRecebidaFormatada(dateFormat.format(chamado.getDataHoraRecebida()));
-			chamado.setDataHoraFinalizadaFormatada(dateFormat.format(chamado.getDataHoraFinalizada()));
-
-			mensagemDataHora = chamado.getDataHoraRecebidaFormatada();
+			verificaDataHoraChamado(dateFormat);
 
 		}
 
+		verificarRegras();
+
+	}
+
+	public void verificaDataHoraChamado(DateFormat dateFormat) {
+		if (chamado.getManutencao().getStatusChamado().equals(StatusChamado.ANDAMENTO)) {
+			chamado.setDataHoraRecebidaFormatada(dateFormat.format(chamado.getDataHoraRecebida()));
+		} else {
+			chamado.setDataHoraRecebidaFormatada(dateFormat.format(chamado.getDataHoraRecebida()));
+			chamado.setDataHoraFinalizadaFormatada(dateFormat.format(chamado.getDataHoraFinalizada()));
+		}
+	}
+
+	public void verificarRegras() {
 		if (usuario.getTipoUsuario().equals(TipoUsuario.FUNCIONARIO)) {
 			regrasUsuarioFuncionario();
 			PrimeFaces.current().executeScript("PF('dlgChamado').show();");
@@ -221,34 +231,70 @@ public class ManutencaoBean implements Serializable {
 	}
 
 	public void regrasUsuarioFuncionario() {
-		
+
 		switch (manutencao.getStatusChamado()) {
 		case FECHADO:
 			habilitaCampo = true;
 			break;
 		case ABERTO:
 			habilitaCampo = false;
+		case ANDAMENTO:
+			habilitaCampo = true;
+			break;
 		default:
 			habilitaBotao = false;
 			break;
 		}
-		
+
 	}
 
 	public void regrasUsuarioOutros() {
+		switch (manutencao.getStatusChamado()) {
+		case ABERTO:
+			habilitaCampo = false;
+			nomeBotao = "Atender";
+			break;
+		case ANDAMENTO:
+			nomeBotao = "Finalizar";
+			break;
+		case FECHADO:
+			habilitaBotao = true;
+			nomeBotao = "Alterar";
+			break;
+		default:
+			break;
+		}
+	}
 
+	public void verificaAcao() {
+		if (nomeBotao.equalsIgnoreCase("Atender")) {
+			atenderChamado();
+		} else {
+			salvarChamado();
+		}
+	}
+
+	public void atenderChamado() {
+		manutencao.setAtendimento(true);
+		manutencao.setStatusChamado(StatusChamado.ANDAMENTO);
+
+		chamado.setDataHoraRecebida(new Date());
+
+		manutencaoDAO.merge(manutencao);
+		chamadoDAO.merge(chamado);
+		PrimeFaces.current().executeScript("PF('dlgChamadoNaoFuncionario').hide();");
+		Messages.addGlobalInfo("Solicitação em atendimento!");
 	}
 
 	public void salvarChamado() {
 
-		chamado.setDataHoraRecebida(new Date());
 		chamado.setDataHoraFinalizada(new Date());
 
 		manutencao.setStatusChamado(StatusChamado.FECHADO);
 		manutencaoDAO.merge(manutencao);
 
 		chamadoDAO.merge(chamado);
-
+		PrimeFaces.current().executeScript("PF('dlgChamadoNaoFuncionario').hide();");
 		Messages.addGlobalInfo("Chamado salvo com sucesso!");
 	}
 

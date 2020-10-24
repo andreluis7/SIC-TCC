@@ -139,19 +139,23 @@
 						readonly="true" />
 
 					<p:outputLabel for="observacaoChamadoNaoFuncionario"
-						value="Parecer técnico:"
-						rendered="#{manutencaoBean.habilitaCampo}" />
+						value="Parecer técnico:" />
 					<p:inputTextarea id="observacaoChamadoNaoFuncionario"
 						maxlength="300" size="300"
-						value="#{manutencaoBean.chamado.observacao}" required="true"
-						requiredMessage="O campo 'Observação' é obrigatório"
-						rendered="#{manutencaoBean.habilitaCampo}" />
+						value="#{manutencaoBean.chamado.observacao}" />
 
 					<p:outputLabel for="horaInicioChamadoNaoFuncionario"
-						value="Data e hora início:" />
+						value="Data e hora da solicitação: " />
 					<p:outputLabel id="horaInicioChamadoNaoFuncionario"
-						value="#{manutencaoBean.mensagemDataHora}" />
+						value="#{manutencaoBean.manutencao.dataHoraFormatada}" />
 
+					<p:outputLabel for="horaAtendimentoChamadoNaoFuncionario"
+						value="Data e hora início atendimento:"
+						rendered="#{manutencaoBean.habilitaCampo}" />
+					<p:outputLabel id="horaAtendimentoChamadoNaoFuncionario"
+						value="#{manutencaoBean.chamado.dataHoraRecebidaFormatada}"
+						rendered="#{manutencaoBean.habilitaCampo}" />
+						
 					<p:outputLabel for="horaFimChamadoNaoFuncionario"
 						value="Data e hora encerramento:"
 						rendered="#{manutencaoBean.habilitaCampo}" />
@@ -162,11 +166,9 @@
 				</h:panelGrid>
 
 				<h:panelGrid columns="3">
-					<p:commandButton value="Atender"
-						update=":mensagem :formCadastroChamadosNaoFuncionario:painel :formListagem:tabela" />
-					<p:commandButton value="Finalizar"
-						update=":mensagem :formCadastroChamadosNaoFuncionario:painel :formListagem:tabela"
-						actionListener="#{manutencaoBean.salvarChamado}"
+					<p:commandButton value="#{manutencaoBean.nomeBotao}"
+						update=":mensagem :formCadastroChamadosNaoFuncionario :formListagem:tabela"
+						actionListener="#{manutencaoBean.verificaAcao}"
 						rendered="#{manutencaoBean.habilitaBotao}" />
 					<p:commandButton value="Fechar"
 						oncomplete="PF('dlgChamadoNaoFuncionario').hide();"

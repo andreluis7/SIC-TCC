@@ -38,6 +38,8 @@ public class Manutencao extends GenericDomain {
 
 	@Transient
 	private String dataHoraFormatada;
+	
+	private Boolean atendimento;
 
 	public String getObservacao() {
 		return observacao;
@@ -86,4 +88,13 @@ public class Manutencao extends GenericDomain {
 	public void setStatusChamado(StatusChamado statusChamado) {
 		this.statusChamado = statusChamado;
 	}
+
+	public Boolean getAtendimento() {
+		return atendimento;
+	}
+
+	public void setAtendimento(Boolean atendimento) {
+		this.atendimento = atendimento;
+	}
+	
 }
