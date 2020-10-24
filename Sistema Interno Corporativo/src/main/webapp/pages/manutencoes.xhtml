@@ -103,45 +103,60 @@
 		</p:dialog>
 
 		<p:dialog header="Chamados" widgetVar="dlgChamado" draggable="false"
-			resizable="false" modal="true" closable="false">
+			resizable="false" modal="true">
 			<h:form id="formCadastroChamados">
 				<h:panelGrid id="painel" columns="2">
 
 					<p:outputLabel for="usuarioNome" value="Usuário" />
 					<p:inputText id="usuarioNome"
 						value="#{manutencaoBean.chamado.usuario.pessoa.nome}"
-						maxlength="8" size="50" readonly="true"/>
+						maxlength="8" size="50" readonly="true" />
 
 					<p:outputLabel for="problemaDescricao" value="Problema:" />
 					<p:inputText id="problemaDescricao"
 						value="#{manutencaoBean.chamado.manutencao.problema.descricao}"
-						readonly="true"/>
-					
+						readonly="true" />
+
 					<p:outputLabel for="statusChamado" value="Status:" />
 					<p:inputText id="statusChamado"
 						value="#{manutencaoBean.chamado.manutencao.statusChamado}"
-						readonly="true"/>
-						
-					<p:outputLabel for="observacaoChamado" value="Observação:" />
+						readonly="true" />
+
+					<p:outputLabel for="observacaoManutencao" value="Observação:" />
+					<p:inputTextarea id="observacaoManutencao" maxlength="300"
+						size="300" value="#{manutencaoBean.chamado.manutencao.observacao}"
+						required="true"
+						requiredMessage="O campo 'Observação' é obrigatório"
+						readonly="true" />
+
+					<p:outputLabel for="observacaoChamado" value="Parecer técnico:"
+						rendered="#{manutencaoBean.habilitaCampo}" />
 					<p:inputTextarea id="observacaoChamado" maxlength="300" size="300"
 						value="#{manutencaoBean.chamado.observacao}" required="true"
-						requiredMessage="O campo 'Observação' é obrigatório" />
+						requiredMessage="O campo 'Observação' é obrigatório"
+						rendered="#{manutencaoBean.habilitaCampo}" />
 
 					<p:outputLabel for="horaInicioChamado" value="Data e hora início:" />
 					<p:outputLabel id="horaInicioChamado"
-						value="#{manutencaoBean.chamado.dataHoraRecebidaFormatada}"/>
-					
-					<p:outputLabel for="horaFimChamado" value="Data e hora encerramento:" />
+						value="#{manutencaoBean.mensagemDataHora}" />
+
+					<p:outputLabel for="horaFimChamado"
+						value="Data e hora encerramento:"
+						rendered="#{manutencaoBean.habilitaCampo}" />
 					<p:outputLabel id="horaFimChamado"
-						value="#{manutencaoBean.chamado.dataHoraFinalizadaFormatada}"/>
-					
+						value="#{manutencaoBean.chamado.dataHoraFinalizadaFormatada}"
+						rendered="#{manutencaoBean.habilitaCampo}" />
+
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar"
 						update=":mensagem :formCadastro:painel :formListagem:tabela"
-						actionListener="#{manutencaoBean.salvarChamado}" />
-					<p:commandButton value="Fechar" oncomplete="PF('dlgChamado').hide();" />
+						actionListener="#{manutencaoBean.salvarChamado}" 
+						rendered="#{manutencaoBean.habilitaBotao}"/>
+					<p:commandButton value="Fechar"
+						oncomplete="PF('dlgChamado').hide();" 
+						rendered="#{manutencaoBean.habilitaBotao}"/>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

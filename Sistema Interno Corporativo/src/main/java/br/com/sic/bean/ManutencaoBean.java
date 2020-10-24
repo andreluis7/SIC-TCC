@@ -24,6 +24,7 @@ import br.com.sic.domain.Manutencao;
 import br.com.sic.domain.Problema;
 import br.com.sic.domain.Usuario;
 import br.com.sic.enumeradores.StatusChamado;
+import br.com.sic.enumeradores.TipoUsuario;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -39,6 +40,11 @@ public class ManutencaoBean implements Serializable {
 
 	private ManutencaoDAO manutencaoDAO;
 	private ChamadoDAO chamadoDAO;
+
+	private Boolean habilitaCampo = false;
+	private Boolean habilitaBotao = true;
+
+	private String mensagemDataHora = "";
 
 	public Manutencao getManutencao() {
 		return manutencao;
@@ -80,6 +86,30 @@ public class ManutencaoBean implements Serializable {
 		this.chamado = chamado;
 	}
 
+	public Boolean getHabilitaCampo() {
+		return habilitaCampo;
+	}
+
+	public void setHabilitaCampo(Boolean habilitaCampo) {
+		this.habilitaCampo = habilitaCampo;
+	}
+
+	public Boolean getHabilitaBotao() {
+		return habilitaBotao;
+	}
+
+	public void setHabilitaBotao(Boolean habilitaBotao) {
+		this.habilitaBotao = habilitaBotao;
+	}
+
+	public String getMensagemDataHora() {
+		return mensagemDataHora;
+	}
+
+	public void setMensagemDataHora(String mensagemDataHora) {
+		this.mensagemDataHora = mensagemDataHora;
+	}
+
 	@PostConstruct
 	public void listar() {
 		try {
@@ -114,12 +144,15 @@ public class ManutencaoBean implements Serializable {
 		switch (usuario.getTipoUsuario()) {
 		case ADMINISTRADOR:
 			manutencoes = manutencaoDAO.listar("codigo");
+			habilitaCampo = true;
 			break;
 		case SUPORTE:
 			manutencoes = manutencaoDAO.listar("codigo");
+			habilitaCampo = true;
 			break;
 		default:
 			manutencoes = manutencaoDAO.listarPorUsuario(usuario.getCodigo());
+			habilitaCampo = false;
 		}
 	}
 
@@ -164,15 +197,33 @@ public class ManutencaoBean implements Serializable {
 		chamado = new Chamado();
 		chamado = chamadoDAO.buscarChamado(manutencao.getCodigo(), manutencao.getUsuario().getCodigo());
 
+		if (manutencao.getStatusChamado().equals(StatusChamado.FECHADO)) {
+			if (!usuario.getTipoUsuario().equals(TipoUsuario.FUNCIONARIO)) {
+				habilitaCampo = true;
+			}  else {
+				habilitaCampo = false;
+			}
+		}
+
+		if (manutencao.getStatusChamado().equals(StatusChamado.ABERTO)) {
+			mensagemDataHora = "Chamado em andamento, em breve setá atendido!";
+		}
+
+		if (usuario.getTipoUsuario().equals(TipoUsuario.FUNCIONARIO)) {
+			habilitaBotao = false;
+		}
+
 		if (chamado == null) {
 			chamado = new Chamado();
 			chamado.setManutencao(manutencao);
 			chamado.setUsuario(usuario);
 		} else {
 			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-			
+
 			chamado.setDataHoraRecebidaFormatada(dateFormat.format(chamado.getDataHoraRecebida()));
 			chamado.setDataHoraFinalizadaFormatada(dateFormat.format(chamado.getDataHoraFinalizada()));
+
+			mensagemDataHora = chamado.getDataHoraRecebidaFormatada();
 
 		}
 
@@ -180,13 +231,13 @@ public class ManutencaoBean implements Serializable {
 	}
 
 	public void salvarChamado() {
-		
+
 		chamado.setDataHoraRecebida(new Date());
 		chamado.setDataHoraFinalizada(new Date());
-		
+
 		manutencao.setStatusChamado(StatusChamado.FECHADO);
 		manutencaoDAO.merge(manutencao);
-				
+
 		chamadoDAO.merge(chamado);
 
 		Messages.addGlobalInfo("Chamado salvo com sucesso!");
@@ -197,4 +248,5 @@ public class ManutencaoBean implements Serializable {
 		return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 
 	}
+
 }
