@@ -197,22 +197,6 @@ public class ManutencaoBean implements Serializable {
 		chamado = new Chamado();
 		chamado = chamadoDAO.buscarChamado(manutencao.getCodigo(), manutencao.getUsuario().getCodigo());
 
-		if (manutencao.getStatusChamado().equals(StatusChamado.FECHADO)) {
-			if (!usuario.getTipoUsuario().equals(TipoUsuario.FUNCIONARIO)) {
-				habilitaCampo = true;
-			}  else {
-				habilitaCampo = false;
-			}
-		}
-
-		if (manutencao.getStatusChamado().equals(StatusChamado.ABERTO)) {
-			mensagemDataHora = "Chamado em andamento, em breve setá atendido!";
-		}
-
-		if (usuario.getTipoUsuario().equals(TipoUsuario.FUNCIONARIO)) {
-			habilitaBotao = false;
-		}
-
 		if (chamado == null) {
 			chamado = new Chamado();
 			chamado.setManutencao(manutencao);
@@ -227,7 +211,35 @@ public class ManutencaoBean implements Serializable {
 
 		}
 
-		PrimeFaces.current().executeScript("PF('dlgChamado').show();");
+		if (usuario.getTipoUsuario().equals(TipoUsuario.FUNCIONARIO)) {
+			regrasUsuarioFuncionario();
+			PrimeFaces.current().executeScript("PF('dlgChamado').show();");
+		} else {
+			regrasUsuarioOutros();
+			PrimeFaces.current().executeScript("PF('dlgChamadoNaoFuncionario').show();");
+		}
+	}
+
+	public void regrasUsuarioFuncionario() {
+		
+		switch (manutencao.getStatusChamado()) {
+		case FECHADO:
+			habilitaCampo = true;
+			habilitaBotao = false;
+			break;
+		case ABERTO:
+			habilitaBotao = false;
+			habilitaCampo = false;
+			mensagemDataHora = "Chamado em andamento, em breve setá atendido!";
+		default:
+			habilitaBotao = false;
+			break;
+		}
+		
+	}
+
+	public void regrasUsuarioOutros() {
+
 	}
 
 	public void salvarChamado() {
