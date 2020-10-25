@@ -323,7 +323,7 @@
 
 @media (min-width: 641px) {
   .login-body {
-    background: url("#{resource['poseidon-layout:images/login/login-background.png']}") top left no-repeat;
+    background: url("#{resource['poseidon-layout:images/login/escritorio.jpg']}") top left no-repeat;
     background-size: cover; } }
 @media (max-width: 640px) {
   .login-body {
@@ -387,7 +387,7 @@ body.exception-body.notfound-page {
 .landing-wrapper #header {
   width: 100%;
   min-height: 500px;
-  background: url("#{resource['poseidon-layout:images/landing/landing-bg.png']}") top left no-repeat #f7f7f7;
+  background: url("#{resource['poseidon-layout:images/landing/escritorio.jpg']}") top left no-repeat #f7f7f7;
   background-size: cover; }
   .landing-wrapper #header .header-top {
     width: 960px;

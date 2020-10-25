@@ -238,6 +238,7 @@ public class ManutencaoBean implements Serializable {
 			break;
 		case ABERTO:
 			habilitaCampo = false;
+			break;
 		case ANDAMENTO:
 			habilitaCampo = true;
 			break;

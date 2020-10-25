@@ -16,7 +16,7 @@
 	<title>SIC - Sistema Interno Corporativo</title>
 </h:head>
 
-<h:body styleClass="login-body">
+<h:body styleClass="login-body" style="background: url('resources/poseidon-layout/images/login/escritorio.jpg') !important;">
 	<p:growl id="mensagem" />
 	<h:form>
 		<div class="login-panel ui-fluid">
@@ -35,9 +35,10 @@
 						requiredMessage="O campo Senha é obrigatório"
 						value="#{autenticacaoBean.usuario.senha}" placeholder="Senha" />
 				</div>
-				<div class="ui-g-12 button-container">
+				<div class="ui-g-9 button-container" style="margin-left: 30px">
 					<p:commandButton value="Entrar" update=":mensagem"
 						actionListener="#{autenticacaoBean.autenticar}" icon="fa fa-user" />
+					<p:outputLabel/>
 				</div>
 			</div>
 		</div>

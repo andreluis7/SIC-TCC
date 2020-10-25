@@ -133,7 +133,7 @@ public class AutenticacaoBean {
 		getSession().setAttribute("usurioLogado", usuarioLogado);
 		
 		try {
-			Faces.redirect("pages/login.xhtml");
+			Faces.redirect("/SIC");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
