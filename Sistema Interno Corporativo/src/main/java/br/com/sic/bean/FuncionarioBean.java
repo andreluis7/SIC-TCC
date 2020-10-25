@@ -19,10 +19,57 @@ import br.com.sic.domain.Pessoa;
 @ViewScoped
 public class FuncionarioBean implements Serializable {
 	private Funcionario funcionario;
-	
+
 	private List<Pessoa> pessoas;
 	private List<Funcionario> funcionarios;
+
+	@PostConstruct
+	public void listar() {
+		try {
+			FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+			funcionarios = funcionarioDAO.listar("codigo");
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar listar os funcionários");
+			erro.printStackTrace();
+		}
+	}
+
+	public void novo() {
+		try {
+			funcionario = new Funcionario();
+
+			PessoaDAO pessoaDAO = new PessoaDAO();
+			pessoas = pessoaDAO.listar("nome");
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar criar um novo funcionário");
+			erro.printStackTrace();
+		}
+	}
+
+	public void salvar() {
+		try {
+			FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+			funcionarioDAO.merge(funcionario);
+
+			funcionario = new Funcionario();
+			funcionarios = funcionarioDAO.listar("codigo");
+
+			PessoaDAO pessoaDAO = new PessoaDAO();
+			pessoas = pessoaDAO.listar("nome");
+
+			Messages.addGlobalInfo("Funcionário salvo com sucesso");
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar salvar o funcionário");
+			erro.printStackTrace();
+		}
+	}
 	
+//	******************************************************************************
+//	
+//							GETTERS AND SETTERS
+//	
+//	******************************************************************************
+
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
@@ -47,44 +94,4 @@ public class FuncionarioBean implements Serializable {
 		this.funcionarios = funcionarios;
 	}
 
-	@PostConstruct
-	public void listar(){
-		try{
-			FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-			funcionarios = funcionarioDAO.listar("codigo");
-		}catch(RuntimeException erro){
-			Messages.addGlobalError("Ocorreu um erro ao tentar listar os funcionários");
-			erro.printStackTrace();
-		}
-	}
-	
-	public void novo() {
-		try {
-			funcionario = new Funcionario();
-
-			PessoaDAO pessoaDAO = new PessoaDAO();
-			pessoas = pessoaDAO.listar("nome");
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao tentar criar um novo funcionário");
-			erro.printStackTrace();
-		}
-	}
-
-	public void salvar() {
-		try {
-			FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-			funcionarioDAO.merge(funcionario);
-			
-			funcionario = new Funcionario();
-			funcionarios = funcionarioDAO.listar("codigo");
-			
-			PessoaDAO pessoaDAO = new PessoaDAO();
-			pessoas = pessoaDAO.listar("nome");
-			
-			Messages.addGlobalInfo("Funcionário salvo com sucesso");
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao tentar salvar o funcionário");
-			erro.printStackTrace();
-		}
-	}
 }

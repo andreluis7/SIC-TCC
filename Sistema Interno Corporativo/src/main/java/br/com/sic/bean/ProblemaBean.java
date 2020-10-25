@@ -20,24 +20,6 @@ public class ProblemaBean implements Serializable {
 	private Problema problema;
 	private List<Problema> problemas;
 
-	
-	
-	public Problema getProblema() {
-		return problema;
-	}
-
-	public void setProblema(Problema problema) {
-		this.problema = problema;
-	}
-
-	public List<Problema> getProblemas() {
-		return problemas;
-	}
-
-	public void setProblemas(List<Problema> problemas) {
-		this.problemas = problemas;
-	}
-
 	@PostConstruct
 	public void listar() {
 		try {
@@ -98,6 +80,28 @@ public class ProblemaBean implements Serializable {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar remover o problema");
 			erro.printStackTrace();
 		}
+	}
+
+//	******************************************************************************
+//	
+//							GETTERS AND SETTERS
+//	
+//	******************************************************************************
+
+	public Problema getProblema() {
+		return problema;
+	}
+
+	public void setProblema(Problema problema) {
+		this.problema = problema;
+	}
+
+	public List<Problema> getProblemas() {
+		return problemas;
+	}
+
+	public void setProblemas(List<Problema> problemas) {
+		this.problemas = problemas;
 	}
 
 }

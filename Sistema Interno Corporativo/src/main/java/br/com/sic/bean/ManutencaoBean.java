@@ -45,70 +45,6 @@ public class ManutencaoBean implements Serializable {
 	private Boolean habilitaBotao = true;
 	private String nomeBotao = "";
 
-	public Manutencao getManutencao() {
-		return manutencao;
-	}
-
-	public void setManutencao(Manutencao manutencao) {
-		this.manutencao = manutencao;
-	}
-
-	public List<Problema> getProblemas() {
-		return problemas;
-	}
-
-	public void setProblemas(List<Problema> problemas) {
-		this.problemas = problemas;
-	}
-
-	public List<Manutencao> getManutencoes() {
-		return manutencoes;
-	}
-
-	public void setManutencoes(List<Manutencao> manutencoes) {
-		this.manutencoes = manutencoes;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public Chamado getChamado() {
-		return chamado;
-	}
-
-	public void setChamado(Chamado chamado) {
-		this.chamado = chamado;
-	}
-
-	public Boolean getHabilitaCampo() {
-		return habilitaCampo;
-	}
-
-	public void setHabilitaCampo(Boolean habilitaCampo) {
-		this.habilitaCampo = habilitaCampo;
-	}
-
-	public Boolean getHabilitaBotao() {
-		return habilitaBotao;
-	}
-
-	public void setHabilitaBotao(Boolean habilitaBotao) {
-		this.habilitaBotao = habilitaBotao;
-	}
-
-	public String getNomeBotao() {
-		return nomeBotao;
-	}
-
-	public void setNomeBotao(String nomeBotao) {
-		this.nomeBotao = nomeBotao;
-	}
-
 	@PostConstruct
 	public void listar() {
 		try {
@@ -288,21 +224,86 @@ public class ManutencaoBean implements Serializable {
 	}
 
 	public void salvarChamado() {
-
 		chamado.setDataHoraFinalizada(new Date());
-
 		manutencao.setStatusChamado(StatusChamado.FECHADO);
 		manutencaoDAO.merge(manutencao);
-
 		chamadoDAO.merge(chamado);
 		PrimeFaces.current().executeScript("PF('dlgChamadoNaoFuncionario').hide();");
 		Messages.addGlobalInfo("Chamado salvo com sucesso!");
 	}
 
 	public HttpSession getSession() {
-
 		return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+	}
+	
+//	******************************************************************************
+//	
+//							GETTERS AND SETTERS
+//	
+//	******************************************************************************
+	
+	public Manutencao getManutencao() {
+		return manutencao;
+	}
 
+	public void setManutencao(Manutencao manutencao) {
+		this.manutencao = manutencao;
+	}
+
+	public List<Problema> getProblemas() {
+		return problemas;
+	}
+
+	public void setProblemas(List<Problema> problemas) {
+		this.problemas = problemas;
+	}
+
+	public List<Manutencao> getManutencoes() {
+		return manutencoes;
+	}
+
+	public void setManutencoes(List<Manutencao> manutencoes) {
+		this.manutencoes = manutencoes;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Chamado getChamado() {
+		return chamado;
+	}
+
+	public void setChamado(Chamado chamado) {
+		this.chamado = chamado;
+	}
+
+	public Boolean getHabilitaCampo() {
+		return habilitaCampo;
+	}
+
+	public void setHabilitaCampo(Boolean habilitaCampo) {
+		this.habilitaCampo = habilitaCampo;
+	}
+
+	public Boolean getHabilitaBotao() {
+		return habilitaBotao;
+	}
+
+	public void setHabilitaBotao(Boolean habilitaBotao) {
+		this.habilitaBotao = habilitaBotao;
+	}
+
+	public String getNomeBotao() {
+		return nomeBotao;
+	}
+
+	public void setNomeBotao(String nomeBotao) {
+		this.nomeBotao = nomeBotao;
 	}
 
 }
