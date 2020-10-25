@@ -13,29 +13,12 @@ import org.omnifaces.util.Messages;
 import br.com.sic.dao.PessoaDAO;
 import br.com.sic.domain.Pessoa;
 
-
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
 public class PessoaBean implements Serializable {
 	private Pessoa pessoa;
 	private List<Pessoa> pessoas;
-
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
-
-	public List<Pessoa> getPessoas() {
-		return pessoas;
-	}
-
-	public void setPessoas(List<Pessoa> pessoas) {
-		this.pessoas = pessoas;
-	}
 
 	@PostConstruct
 	public void listar() {
@@ -97,6 +80,28 @@ public class PessoaBean implements Serializable {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar remover a pessoa");
 			erro.printStackTrace();
 		}
+	}
+
+//	******************************************************************************
+//	
+//							GETTERS AND SETTERS
+//	
+//	******************************************************************************
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public List<Pessoa> getPessoas() {
+		return pessoas;
+	}
+
+	public void setPessoas(List<Pessoa> pessoas) {
+		this.pessoas = pessoas;
 	}
 
 }

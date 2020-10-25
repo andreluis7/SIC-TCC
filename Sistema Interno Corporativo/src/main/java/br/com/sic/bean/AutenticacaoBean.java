@@ -23,6 +23,90 @@ public class AutenticacaoBean {
 	private boolean mostraUsuario = false, mostraPessoa = false, mostraFuncionario = false, mostraProblema = false,
 			mostraManutencao = false;
 
+	@PostConstruct
+	public void iniciar() {
+		usuario = new Usuario();
+		usuario.setPessoa(new Pessoa());
+	}
+
+	public void autenticar() {
+		try {
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
+			usuarioLogado = usuarioDAO.autenticar(usuario.getPessoa().getCpf(), usuario.getSenha());
+
+			if (usuarioLogado == null) {
+				Messages.addGlobalError("CPF e/ou senha incorretos");
+				return;
+			}
+
+			// colocar atributo na sessao
+			getSession().setAttribute("usurioLogado", usuarioLogado);
+
+			Faces.redirect("./pages/principal.xhtml");
+
+		} catch (IOException erro) {
+			erro.printStackTrace();
+			Messages.addGlobalError(erro.getMessage());
+		}
+	}
+
+	public HttpSession getSession() {
+		return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+	}
+
+	public void verificaTipoUsuario() {
+
+		switch (usuarioLogado.getTipoUsuario()) {
+		case ADMINISTRADOR:
+			mostraFuncionario = true;
+			mostraManutencao = true;
+			mostraPessoa = true;
+			mostraProblema = true;
+			mostraUsuario = true;
+			break;
+		case FUNCIONARIO:
+			mostraManutencao = true;
+
+			mostraFuncionario = false;
+			mostraPessoa = false;
+			mostraProblema = false;
+			mostraUsuario = false;
+			break;
+		case SUPORTE:
+			mostraProblema = true;
+			mostraManutencao = true;
+
+			mostraFuncionario = false;
+			mostraPessoa = false;
+			mostraUsuario = false;
+			break;
+		default:
+			break;
+		}
+
+	}
+
+	/**
+	 * Método para fazer logout.
+	 * 
+	 */
+	public void logout() {
+		usuarioLogado = new Usuario();
+		getSession().setAttribute("usurioLogado", usuarioLogado);
+
+		try {
+			Faces.redirect("/SIC");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+//	******************************************************************************
+//	
+//							GETTERS AND SETTERS
+//	
+//	******************************************************************************
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -58,85 +142,4 @@ public class AutenticacaoBean {
 	public boolean isMostraUsuario() {
 		return mostraUsuario;
 	}
-
-	@PostConstruct
-	public void iniciar() {
-		usuario = new Usuario();
-		usuario.setPessoa(new Pessoa());
-	}
-
-	public void autenticar() {
-		try {
-			UsuarioDAO usuarioDAO = new UsuarioDAO();
-			usuarioLogado = usuarioDAO.autenticar(usuario.getPessoa().getCpf(), usuario.getSenha());
-
-			if (usuarioLogado == null) {
-				Messages.addGlobalError("CPF e/ou senha incorretos");
-				return;
-			}
-
-			// colocar atributo na sessao
-			getSession().setAttribute("usurioLogado", usuarioLogado);
-
-			Faces.redirect("./pages/principal.xhtml");
-
-		} catch (IOException erro) {
-			erro.printStackTrace();
-			Messages.addGlobalError(erro.getMessage());
-		}
-	}
-
-	public HttpSession getSession() {
-
-		return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-
-	}
-
-	public void verificaTipoUsuario() {
-
-		switch (usuarioLogado.getTipoUsuario()) {
-		case ADMINISTRADOR:
-			mostraFuncionario = true;
-			mostraManutencao = true;
-			mostraPessoa = true;
-			mostraProblema = true;
-			mostraUsuario = true;
-			break;
-		case FUNCIONARIO:
-			mostraManutencao = true;
-
-			mostraFuncionario = false;
-			mostraPessoa = false;
-			mostraProblema = false;
-			mostraUsuario = false;
-			break;
-		case SUPORTE:
-			mostraProblema = true;
-			mostraManutencao = true;
-			
-			mostraFuncionario = false;
-			mostraPessoa = false;
-			mostraUsuario = false;
-			break;
-		default:
-			break;
-		}
-
-	}
-	
-	/**
-	 * Método para fazer logout.
-	 * 
-	 */
-	public void logout() {
-		usuarioLogado = new Usuario();
-		getSession().setAttribute("usurioLogado", usuarioLogado);
-		
-		try {
-			Faces.redirect("/SIC");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 }
