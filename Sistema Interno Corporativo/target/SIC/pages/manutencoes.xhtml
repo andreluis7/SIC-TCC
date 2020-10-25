@@ -22,6 +22,8 @@
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
+						<p:commandButton icon="ui-icon-print"
+							actionListener="#{manutencaoBean.imprimir}" />
 					</f:facet>
 
 					<p:column headerText="Funcionário"
@@ -156,7 +158,7 @@
 					<p:outputLabel id="horaAtendimentoChamadoNaoFuncionario"
 						value="#{manutencaoBean.chamado.dataHoraRecebidaFormatada}"
 						rendered="#{manutencaoBean.habilitaCampo}" />
-						
+
 					<p:outputLabel for="horaFimChamadoNaoFuncionario"
 						value="Data e hora encerramento:"
 						rendered="#{manutencaoBean.habilitaCampo}" />
@@ -224,13 +226,12 @@
 						value="#{manutencaoBean.manutencao.dataHoraFormatada}" />
 
 
-					<p:outputLabel for="horaInicio"
-						value="Data e hora ínicio:"
+					<p:outputLabel for="horaInicio" value="Data e hora ínicio:"
 						rendered="#{manutencaoBean.habilitaCampo}" />
 					<p:outputLabel id="horaInicio"
 						value="#{manutencaoBean.chamado.dataHoraRecebidaFormatada}"
 						rendered="#{manutencaoBean.habilitaCampo}" />
-						
+
 					<p:outputLabel for="horaFimChamado"
 						value="Data e hora encerramento:"
 						rendered="#{manutencaoBean.habilitaCampo}" />
