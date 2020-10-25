@@ -48,7 +48,8 @@
 
 						<p:commandButton icon="ui-icon-search"
 							actionListener="#{manutencaoBean.carregaInfoChamado}"
-							update=":mensagem :formListagem:tabela :formCadastroChamados :formCadastroChamadosNaoFuncionario">
+							update=":mensagem :formListagem:tabela :formCadastroChamados :formCadastroChamadosNaoFuncionario"
+							style="margin-left: 50px">
 							<f:attribute name="manutencaoSelecionada" value="#{manutencao}" />
 						</p:commandButton>
 
@@ -139,19 +140,23 @@
 						readonly="true" />
 
 					<p:outputLabel for="observacaoChamadoNaoFuncionario"
-						value="Parecer técnico:"
-						rendered="#{manutencaoBean.habilitaCampo}" />
+						value="Parecer técnico:" />
 					<p:inputTextarea id="observacaoChamadoNaoFuncionario"
 						maxlength="300" size="300"
-						value="#{manutencaoBean.chamado.observacao}" required="true"
-						requiredMessage="O campo 'Observação' é obrigatório"
-						rendered="#{manutencaoBean.habilitaCampo}" />
+						value="#{manutencaoBean.chamado.observacao}" />
 
 					<p:outputLabel for="horaInicioChamadoNaoFuncionario"
-						value="Data e hora início:" />
+						value="Data e hora da solicitação: " />
 					<p:outputLabel id="horaInicioChamadoNaoFuncionario"
-						value="#{manutencaoBean.mensagemDataHora}" />
+						value="#{manutencaoBean.manutencao.dataHoraFormatada}" />
 
+					<p:outputLabel for="horaAtendimentoChamadoNaoFuncionario"
+						value="Data e hora início atendimento:"
+						rendered="#{manutencaoBean.habilitaCampo}" />
+					<p:outputLabel id="horaAtendimentoChamadoNaoFuncionario"
+						value="#{manutencaoBean.chamado.dataHoraRecebidaFormatada}"
+						rendered="#{manutencaoBean.habilitaCampo}" />
+						
 					<p:outputLabel for="horaFimChamadoNaoFuncionario"
 						value="Data e hora encerramento:"
 						rendered="#{manutencaoBean.habilitaCampo}" />
@@ -162,12 +167,10 @@
 				</h:panelGrid>
 
 				<h:panelGrid columns="3">
-					<p:commandButton value="Salvar"
-						update=":mensagem :formCadastroChamadosNaoFuncionario:painel :formListagem:tabela"
-						actionListener="#{manutencaoBean.salvarChamado}"
+					<p:commandButton value="#{manutencaoBean.nomeBotao}"
+						update=":mensagem :formCadastroChamadosNaoFuncionario :formListagem:tabela"
+						actionListener="#{manutencaoBean.verificaAcao}"
 						rendered="#{manutencaoBean.habilitaBotao}" />
-					<p:commandButton value="Atender"
-						update=":mensagem :formCadastroChamadosNaoFuncionario:painel :formListagem:tabela" />
 					<p:commandButton value="Fechar"
 						oncomplete="PF('dlgChamadoNaoFuncionario').hide();"
 						rendered="#{manutencaoBean.habilitaBotao}" />
@@ -215,10 +218,19 @@
 						requiredMessage="O campo 'Observação' é obrigatório"
 						rendered="#{manutencaoBean.habilitaCampo}" />
 
-					<p:outputLabel for="horaInicioChamado" value="Data e hora início:" />
+					<p:outputLabel for="horaInicioChamado"
+						value="Data e hora da solicitação: " />
 					<p:outputLabel id="horaInicioChamado"
-						value="#{manutencaoBean.mensagemDataHora}" />
+						value="#{manutencaoBean.manutencao.dataHoraFormatada}" />
 
+
+					<p:outputLabel for="horaInicio"
+						value="Data e hora ínicio:"
+						rendered="#{manutencaoBean.habilitaCampo}" />
+					<p:outputLabel id="horaInicio"
+						value="#{manutencaoBean.chamado.dataHoraRecebidaFormatada}"
+						rendered="#{manutencaoBean.habilitaCampo}" />
+						
 					<p:outputLabel for="horaFimChamado"
 						value="Data e hora encerramento:"
 						rendered="#{manutencaoBean.habilitaCampo}" />
@@ -228,15 +240,6 @@
 
 				</h:panelGrid>
 
-				<h:panelGrid columns="2">
-					<p:commandButton value="Salvar"
-						update=":mensagem :formCadastro:painel :formListagem:tabela"
-						actionListener="#{manutencaoBean.salvarChamado}"
-						rendered="#{manutencaoBean.habilitaBotao}" />
-					<p:commandButton value="Fechar"
-						oncomplete="PF('dlgChamado').hide();"
-						rendered="#{manutencaoBean.habilitaBotao}" />
-				</h:panelGrid>
 			</h:form>
 		</p:dialog>
 
