@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="manutencoes" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ecf120e4-baeb-4aa6-a517-7cdd8009ef71">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SIC Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[c2ljLnByb2JsZW1hICwxOTMsMTUsZjk0MDRiYmItOTMxZC00ZGJjLTk4NTktYjBjODhlZDA4OGEy
+O3NpYy5tYW51dGVuY2FvICwxNSwyNixlMmExMTJiNC0xZmE0LTRiNzEtYjhlOS05YzgyOTYxOWY1
+Zjc7c2ljLnBlc3NvYSAsMzU2LDQwLDg1NzZmNzA3LTViOTAtNGY2ZC1hZGNmLTU5MGY0MDQyYWUy
+YjtzaWMudXN1YXJpbyAsMTkzLDEzMSw4ZDI3Yzc2YS1iZDM0LTRlMGQtOGVmYy1jMTgzN2VjNmM2
+Zjk7]]>
+	</property>
+	<parameter name="STATUS_PESQUISA" class="java.lang.String"/>
+	<parameter name="IMAGEM_LOGO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT sic.problema.descricao,
+	sic.manutencao.`dataHoraAbertura`,
+	sic.manutencao.observacao,
+	sic.manutencao.`statusChamado`,
+	sic.pessoa.nome
+FROM sic.manutencao
+	INNER JOIN sic.problema ON 
+	 sic.manutencao.problema_codigo = sic.problema.codigo 
+	INNER JOIN sic.usuario ON 
+	 sic.manutencao.usuario_codigo = sic.usuario.codigo 
+	INNER JOIN sic.pessoa ON 
+	 sic.usuario.pessoa_codigo = sic.pessoa.codigo 
+WHERE 
+	 sic.manutencao.`statusChamado` LIKE $P{STATUS_PESQUISA} 
+ORDER BY sic.manutencao.`dataHoraAbertura` DESC]]>
+	</queryString>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="problema"/>
+	</field>
+	<field name="dataHoraAbertura" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="dataHoraAbertura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="manutencao"/>
+	</field>
+	<field name="observacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="observacao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="manutencao"/>
+	</field>
+	<field name="statusChamado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="statusChamado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="manutencao"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pessoa"/>
+	</field>
+	<title>
+		<band height="85" splitType="Stretch">
+			<image hAlign="Center" vAlign="Top">
+				<reportElement x="0" y="0" width="550" height="85" uuid="f0018ff9-0fb8-4067-a582-ad78fe6e79b0"/>
+				<imageExpression><![CDATA[$P{IMAGEM_LOGO}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="5" width="550" height="30" uuid="c818be28-d179-4a62-9da5-611d3bc74906"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de manutenções]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="3f4a7dfe-5d16-4fa3-b84e-e95dc328c5d5"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Funcionário]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="112" y="0" width="100" height="30" uuid="ac639af7-5885-4d4b-8034-42934c427eb5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e44cbac0-480f-4e89-b51c-2478d2a94987"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="0" width="100" height="30" uuid="c7f1961f-0ca8-4c74-b126-661d9c7059d0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c2690afb-3a5c-464b-b4d6-56fa38f3a1a5"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Problema]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="317" y="0" width="100" height="30" uuid="73a99305-3c4f-40be-82a7-526129194c2a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e976c815-8e11-40e2-ba89-ee627b72dd5f"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="143" height="30" uuid="f70b490d-8f84-428d-b870-d9a9ee281b02">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="22c89fc5-b8ef-4930-93a3-04501ee76a7e"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data e Hora da Abertura]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="66" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="30" uuid="6c326bf9-b03e-44cf-82f9-3a7360112d87"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="112" y="0" width="100" height="66" uuid="de2beede-05f5-4383-8b24-a2f1e4c03043">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e44cbac0-480f-4e89-b51c-2478d2a94987"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{observacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="212" y="0" width="100" height="30" uuid="6cd95a05-a985-4009-9b72-202a53556c05">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c2690afb-3a5c-464b-b4d6-56fa38f3a1a5"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="317" y="0" width="120" height="30" uuid="72636a5c-29bb-47e8-9ecb-dd5cebef89e8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e976c815-8e11-40e2-ba89-ee627b72dd5f"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{statusChamado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="419" y="1" width="120" height="30" uuid="4b6430f9-1ea5-4fb9-a515-cf6f0004522f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="22c89fc5-b8ef-4930-93a3-04501ee76a7e"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataHoraAbertura}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="30" width="550" height="21" uuid="e42ca5f2-fea2-4b00-889e-8ea624a73b5f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R. Júlio Mori, 220 - Centro, Ourinhos - SP, 19906-000]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

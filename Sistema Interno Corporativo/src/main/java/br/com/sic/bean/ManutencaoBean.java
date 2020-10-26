@@ -1,10 +1,13 @@
 package br.com.sic.bean;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -13,6 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.PrimeFaces;
 
@@ -25,6 +29,11 @@ import br.com.sic.domain.Problema;
 import br.com.sic.domain.Usuario;
 import br.com.sic.enumeradores.StatusChamado;
 import br.com.sic.enumeradores.TipoUsuario;
+import br.com.sic.util.HibernateUtil;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -230,6 +239,26 @@ public class ManutencaoBean implements Serializable {
 		chamadoDAO.merge(chamado);
 		PrimeFaces.current().executeScript("PF('dlgChamadoNaoFuncionario').hide();");
 		Messages.addGlobalInfo("Chamado salvo com sucesso!");
+	}
+	
+	public void imprimir() {
+		try {
+			String caminhoRelatorio = Faces.getRealPath("/reports/manutencoes.jasper");
+			String caminhoLogo = Faces.getRealPath("/resources/poseidon-layout/images/banner.png");
+
+			Map<String, Object> parametros = new HashMap<>();
+			parametros.put("STATUS_PESQUISA", "%%");
+			parametros.put("IMAGEM_LOGO", caminhoLogo);
+			
+			Connection conexao = HibernateUtil.getConexao();
+
+			JasperPrint relatorio = JasperFillManager.fillReport(caminhoRelatorio, parametros, conexao);
+			
+			JasperPrintManager.printReport(relatorio, true);
+		} catch (JRException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatório");
+			erro.printStackTrace();
+		}
 	}
 
 	public HttpSession getSession() {
