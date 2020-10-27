@@ -25,6 +25,7 @@ br\com\sic\bean\FuncionarioBean.class
 br\com\sic\domain\Manutencao.class
 br\com\sic\dao\FuncionarioDAO.class
 br\com\sic\enumeradores\StatusChamado$1.class
+br\com\sic\util\RelatorioUtil.class
 br\com\sic\enumeradores\TipoUsuario$1.class
 br\com\sic\bean\ManutencaoBean$1.class
 br\com\sic\domain\Problema.class

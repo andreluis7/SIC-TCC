@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.omnifaces.util.Faces;
@@ -30,10 +31,10 @@ import br.com.sic.domain.Usuario;
 import br.com.sic.enumeradores.StatusChamado;
 import br.com.sic.enumeradores.TipoUsuario;
 import br.com.sic.util.HibernateUtil;
-import net.sf.jasperreports.engine.JRException;
+import br.com.sic.util.RelatorioUtil;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperPrintManager;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -240,7 +241,7 @@ public class ManutencaoBean implements Serializable {
 		PrimeFaces.current().executeScript("PF('dlgChamadoNaoFuncionario').hide();");
 		Messages.addGlobalInfo("Chamado salvo com sucesso!");
 	}
-	
+
 	public void imprimir() {
 		try {
 			String caminhoRelatorio = Faces.getRealPath("/reports/manutencoes.jasper");
@@ -249,13 +250,24 @@ public class ManutencaoBean implements Serializable {
 			Map<String, Object> parametros = new HashMap<>();
 			parametros.put("STATUS_PESQUISA", "%%");
 			parametros.put("IMAGEM_LOGO", caminhoLogo);
-			
+
 			Connection conexao = HibernateUtil.getConexao();
 
 			JasperPrint relatorio = JasperFillManager.fillReport(caminhoRelatorio, parametros, conexao);
-			
-			JasperPrintManager.printReport(relatorio, true);
-		} catch (JRException erro) {
+
+			byte[] bytes = JasperExportManager.exportReportToPdf(relatorio);
+
+			if (bytes != null) {
+				HttpServletResponse response = RelatorioUtil.getResponse();
+				response.setContentType("application/pdf");
+	            response.setHeader("Content-disposition", "attachment" + "; filename=\"" + "Manutencoes" + ".pdf\"");
+				response.setContentLength(bytes.length);
+				response.getOutputStream().write(bytes, 0, bytes.length);
+				response.getOutputStream().flush();
+				response.flushBuffer();
+				RelatorioUtil.responseComplete();
+			}
+		} catch (Exception erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatório");
 			erro.printStackTrace();
 		}
@@ -264,13 +276,13 @@ public class ManutencaoBean implements Serializable {
 	public HttpSession getSession() {
 		return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 	}
-	
+
 //	******************************************************************************
 //	
 //							GETTERS AND SETTERS
 //	
 //	******************************************************************************
-	
+
 	public Manutencao getManutencao() {
 		return manutencao;
 	}
