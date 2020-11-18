@@ -245,7 +245,7 @@ public class ManutencaoBean implements Serializable {
 	public void imprimir() {
 		try {
 			String caminhoRelatorio = Faces.getRealPath("/reports/manutencoes.jasper");
-			String caminhoLogo = Faces.getRealPath("/resources/poseidon-layout/images/banner.png");
+			String caminhoLogo = Faces.getRealPath("/resources/poseidon-layout/images/logo-white.png");
 
 			Map<String, Object> parametros = new HashMap<>();
 			parametros.put("STATUS_PESQUISA", "%%");
