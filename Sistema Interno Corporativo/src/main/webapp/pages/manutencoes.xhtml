@@ -22,7 +22,7 @@
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
-						<p:commandButton icon="ui-icon-print" rendered="#{manutencaoBean.habilitaCampo}"
+						<p:commandButton icon="ui-icon-print"
 							actionListener="#{manutencaoBean.imprimir}" ajax="false"/>
 					</f:facet>
 
@@ -41,12 +41,6 @@
 						sortBy="#{manutencao.problema.descricao}"
 						filterBy="#{manutencao.problema.descricao}">
 						<h:outputText value="#{manutencao.problema.descricao}" />
-					</p:column>
-					
-					<p:column headerText="Prioridade"
-						sortBy="#{manutencao.problema.tipoPrioridade}"
-						filterBy="#{manutencao.problema.tipoPrioridade}">
-						<h:outputText value="#{manutencao.problema.tipoPrioridade}" />
 					</p:column>
 
 					<p:column headerText="Status" sortBy="#{manutencao.statusChamado}"
