@@ -22,8 +22,8 @@
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
-						<p:commandButton icon="ui-icon-print"
-							actionListener="#{manutencaoBean.imprimir}" />
+						<p:commandButton icon="ui-icon-print" rendered="#{manutencaoBean.habilitaCampo}"
+							actionListener="#{manutencaoBean.imprimir}" ajax="false"/>
 					</f:facet>
 
 					<p:column headerText="Funcionário"
@@ -39,8 +39,16 @@
 
 					<p:column headerText="Problema"
 						sortBy="#{manutencao.problema.descricao}"
-						filterBy="#{manutencao.problema.descricao}">
+						filterBy="#{manutencao.problema.descricao}"
+						width="90">
 						<h:outputText value="#{manutencao.problema.descricao}" />
+					</p:column>
+					
+					<p:column headerText="Prioridade"
+						sortBy="#{manutencao.problema.tipoPrioridade}"
+						filterBy="#{manutencao.problema.tipoPrioridade}"
+						width="100">
+						<h:outputText value="#{manutencao.problema.tipoPrioridade}" />
 					</p:column>
 
 					<p:column headerText="Status" sortBy="#{manutencao.statusChamado}"
@@ -51,7 +59,7 @@
 						<p:commandButton icon="ui-icon-search"
 							actionListener="#{manutencaoBean.carregaInfoChamado}"
 							update=":mensagem :formListagem:tabela :formCadastroChamados :formCadastroChamadosNaoFuncionario"
-							style="margin-left: 50px">
+							style="margin-left: 20px">
 							<f:attribute name="manutencaoSelecionada" value="#{manutencao}" />
 						</p:commandButton>
 

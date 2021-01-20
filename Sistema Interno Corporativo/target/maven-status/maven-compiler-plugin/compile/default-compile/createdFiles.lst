@@ -9,7 +9,9 @@ br\com\sic\domain\Pessoa.class
 br\com\sic\dao\ChamadoDAO.class
 br\com\sic\bean\AutenticacaoBean$1.class
 br\com\sic\domain\GenericDomain.class
+br\com\sic\enumeradores\TipoPrioridade.class
 br\com\sic\bean\ManutencaoBean.class
+br\com\sic\enumeradores\TipoPrioridade$1.class
 br\com\sic\util\AutenticacaoListener.class
 br\com\sic\dao\UsuarioDAO.class
 br\com\sic\bean\AutenticacaoBean.class
